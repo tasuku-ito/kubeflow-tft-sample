@@ -42,7 +42,7 @@ def preprocessing_fn(inputs):
     }
 
 
-def run(argv=None, save_main_session=True):
+def run(argv=None):
     """Main entry point; defines and runs the wordcount pipeline."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -53,7 +53,7 @@ def run(argv=None, save_main_session=True):
     known_args, pipeline_args = parser.parse_known_args(argv)
 
     pipeline_options = PipelineOptions(pipeline_args)
-    pipeline_options.view_as(SetupOptions).save_main_session = save_main_session
+    # pipeline_options.view_as(SetupOptions).save_main_session = save_main_session
     # Ignore the warnings
     with beam.Pipeline(options=pipeline_options) as p:
         with beam_impl.Context(temp_dir=known_args.output_dir):

@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+kfp = "*"
+tensorflow = "*"
+tensorflow-transform = "==1.9.0"
+apache-beam = {version = "==2.38.0", extras = ["gcp"]}
+future = "*"
+google-cloud-pipeline-components = "*"
+pytest = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

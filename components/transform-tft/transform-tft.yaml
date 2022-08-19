@@ -1,0 +1,28 @@
+name: transform-tft
+inputs:
+- {name: project, type: String}
+- {name: region, type: String}
+- {name: temp_location, type: String}
+- {name: setup_file, type: String}
+- {name: output_dir, type: String} # Dataflowの引数を追加する
+outputs:
+- {name: gcp_resources, type: String}
+- {name: output_dir_path, type: String} # 後続の処理に渡したいパラメータを追加する
+
+implementation:
+  container:
+    image: asia-northeast1-docker.pkg.dev/transform-tft:v1.0.0
+    command:
+      - pipenv
+      - run
+      - python
+      - /transform-tft/src/run.py 
+    args: [
+      --project, {inputValue: project},
+      --region, {inputValue: region},
+      --temp_location, {inputValue: temp_location},
+      --setup_file,{inputValue: setup_file},
+      --output_dir, {inputValue: output_dir},
+      --gcp_resources, {outputPath: gcp_resources},
+      --output_dir_path, {outputPath: output_dir_path},
+    ]
