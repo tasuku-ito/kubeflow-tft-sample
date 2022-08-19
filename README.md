@@ -31,7 +31,15 @@ python components/wordcount/wc.py --output gs://ca-pubtex-ai-verification-datafl
 
 ## transform-tft
 プロジェクト名、バケット名は適宜変更すること
+
+Dataflowのコードをローカルから起動する場合
 ```
 python components/transform-tft/simple_sample.py --output_dir gs://ca-pubtex-ai-verification-dataflow/output_tft --runner DataflowRunner --project ca-pubtex-ai-verification --region us-central1 --staging_location gs://ca-pubtex-ai-verification-dataflow/staging --temp_location gs://ca-pubtex-ai-verification-dataflow/tmp --setup_file components/transform-tft/setup.py
 ```
 
+kubeflowから呼び出すコンポーネントコードから、Dataflowのコードを起動する場合
+```
+pipenv run python src/run.py --project ca-pubtex-ai-verification --region us-central1 --temp_location gs://ca-pubtex-ai-verification-dataflow/tmp --setup_file ./setup.py --output_dir gs://ca-pubtex-ai-verification-dataflow/output_tft --gcp_resources /Path/to/gcp_resource.txt --output_dir_path /Path/to/tmp.txt
+```
+src/run.pyがコンポーネントとして起動する場合のエントリポイントである。（component.yamlを参照）
+--gcp_resourcesと--output_dir_pathはコンポーネントのoutputsであるため、outputsを書き込むためのファイルを事前に用意すること。
