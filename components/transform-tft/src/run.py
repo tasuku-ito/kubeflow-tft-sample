@@ -82,8 +82,7 @@ def create_python_job(python_file_path: str,
       job_resource.resource_type = 'DataflowJob'
       job_resource.resource_uri = f'https://dataflow.googleapis.com/v1b3/projects/{artifact_arguments.project}/locations/{artifact_arguments.region}/jobs/{job_id}'
 
-      Path(artifacts.component_outputs.output_dir_path).parent.mkdir(parents=True, exist_ok=True)
-      Path(artifacts.component_outputs.output_dir_path).write_text(str(artifacts.component_arguments.output_dir))
+      Path(artifacts.component_outputs.gcp_resources).parent.mkdir(parents=True, exist_ok=True)
       
       with open(gcp_resources, 'w') as f:
         f.write(json_format.MessageToJson(job_resources))
