@@ -11,7 +11,10 @@ from kfp.v2 import compiler
 module_dir = Path(__file__).resolve().parents[2].joinpath("components")
 transform_tft_component_yaml_path = module_dir.joinpath(
     "transform-tft/transform-tft.yaml").resolve().as_posix()
+wait_gcp_resources_url ="https://raw.githubusercontent.com/kubeflow/pipelines/google-cloud-pipeline-components-1.0.7/components/google-cloud/google_cloud_pipeline_components/v1/wait_gcp_resources/component.yaml"
+
 transform_tft = kfp.components.load_component_from_file(transform_tft_component_yaml_path)
+wait_gcp_resources = kfp.components.load_component_from_url(wait_gcp_resources_url)
 
 """setteing"""
 project_id = "ca-pubtex-ai-verification"
@@ -36,6 +39,9 @@ def pipeline(
         temp_location = temp_location,
         setup_file = setup_file,
         output_dir = output_dir,
+    )
+    wait_op = wait_gcp_resources(
+        gcp_resources = df_op.outputs["gcp_resources"],
     )
     
 

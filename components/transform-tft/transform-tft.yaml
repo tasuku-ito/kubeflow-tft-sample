@@ -11,7 +11,7 @@ outputs:
 
 implementation:
   container:
-    image: asia-northeast1-docker.pkg.dev/ca-pubtex-ai-verification/transform-tft/transform-tft:v1.0.1
+    image: asia-northeast1-docker.pkg.dev/ca-pubtex-ai-verification/transform-tft/transform-tft:v1.0.3
     command:
       - pipenv
       - run
