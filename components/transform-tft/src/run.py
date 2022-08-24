@@ -82,6 +82,8 @@ def create_python_job(python_file_path: str,
       job_resource.resource_type = 'DataflowJob'
       job_resource.resource_uri = f'https://dataflow.googleapis.com/v1b3/projects/{artifact_arguments.project}/locations/{artifact_arguments.region}/jobs/{job_id}'
 
+      Path(artifacts.component_outputs.gcp_resources).parent.mkdir(parents=True, exist_ok=True)
+      
       with open(gcp_resources, 'w') as f:
         f.write(json_format.MessageToJson(job_resources))
       break
@@ -136,7 +138,7 @@ class Process:
 if __name__ == '__main__':
     artifacts = Artifacts.from_args()
     create_python_job(
-      python_file_path="src/simple_sample.py", # TODO モジュールへのファイルパスは適宜変更する
+      python_file_path=Path(__file__).resolve().parents[0].joinpath("simple_sample.py"), # TODO モジュールへのファイルパスは適宜変更する
       gcp_resources=artifacts.component_outputs.gcp_resources,
       artifact_arguments=artifacts.component_arguments)
 
